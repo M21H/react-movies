@@ -41,35 +41,34 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    getData()
-      .then(
-        ([
+    (async () => {
+      try {
+        const [
           upcomingMoviesData,
           popularMoviesData,
           popularTvData,
           familyMoviesData,
           documentaryMoviesData,
-        ]) => {
-          const moviesImagesArray = [];
-          upcomingMoviesData.forEach(movie => {
-            moviesImagesArray.push(
-              `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            );
-          });
-          setMoviesImages(moviesImagesArray);
-          setPopularMovies(popularMoviesData);
-          setPopularTv(popularTvData);
-          setFamilyMovies(familyMoviesData);
-          setDocumentaryMovies(documentaryMoviesData);
-          setLoaded(true);
-        },
-      )
-      .catch(err => {
-        setError(err);
-      })
-      .finally(() => {
+        ] = await getData();
+
+        const moviesImagesArray = [];
+        upcomingMoviesData.forEach(movie => {
+          moviesImagesArray.push(
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+          );
+        });
+        setMoviesImages(moviesImagesArray);
+        setPopularMovies(popularMoviesData);
+        setPopularTv(popularTvData);
+        setFamilyMovies(familyMoviesData);
+        setDocumentaryMovies(documentaryMoviesData);
         setLoaded(true);
-      });
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoaded(true);
+      }
+    })();
   }, []);
 
   return (

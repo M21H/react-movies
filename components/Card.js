@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity, StyleSheet, Image, Text} from 'react-native';
 import PropsType from 'prop-types';
 
-const placeholderImg = require('../assets/img/placeholder.png');
+import placeholderImg from '../assets/img/placeholder.png';
 
 const propsType = {
   item: PropsType.object,
@@ -11,11 +11,10 @@ const propsType = {
 class Card extends React.PureComponent {
   render() {
     const {item, navigation} = this.props;
-
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => navigation.navigate('Detail')}>
+        onPress={() => navigation.navigate('Detail', {movieId: item.id})}>
         <Image
           resizeMode="cover"
           style={styles.image}
